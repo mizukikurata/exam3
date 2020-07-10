@@ -97,15 +97,15 @@ head(inequality_panel)
 4. Reshape inequality_wide to long format. Once you are done, run the head() command so we can get a quick peak at the data. [5 points]
 ```{r}
 #pivoting longer
-#inequality_long =  
-#inequality_panel %>%
-  #pivot_longer(cols = starts_with("year_"),
-              # names_to = "year",
-              # names_prefix = "year_",
-              # values_to = "gini",
-              # values_drop_na = FALSE) 
+inequality_long =  
+inequality_wide %>%
+  pivot_longer(cols = starts_with("year"),
+              names_to = "year",
+              names_prefix = "year_",
+              values_to = "gini",
+              values_drop_na = FALSE) 
 #head
-#head(inequality_long)
+head(inequality_long)
 ```
 
 
@@ -151,7 +151,7 @@ library(ggrepel)
 library(geosphere)
 library(rgeos)
 library(viridis)
-library(mapview)
+#library(mapview)
 library(rnaturalearth)
 library(devtools)
 library(rnaturalearthhires)
@@ -159,19 +159,19 @@ library(sp)
 library(sf)
 library(ggplot2)
 #get map of US
-america <- ne_countries(country = 'United States',
-  scale = "medium",
-  returnclass = "sf")
+#america <- ne_countries(country = 'United States',
+ # scale = "medium",
+  #returnclass = "sf")
 
-usa_map = ggplot()+
-  geom_sf(data = america)+
-  geom_sf(data = inequality_collapsed, aes(fill = `gini`))+
-  scale_fill_viridis(option = "viridis")+
-  ggtitle("")+
-  theme(plot.title = element_text(hjust=0.5))+
-  theme_void()
+#usa_map = ggplot()+
+ # geom_sf(data = america)+
+  #geom_sf(data = inequality_collapsed, aes(fill = `gini`))+
+  #scale_fill_viridis(option = "viridis")+
+  #ggtitle("")+
+  #theme(plot.title = element_text(hjust=0.5))+
+  #theme_void()
 
-print(usa_map)
+#print(usa_map)
 
 ```
 
@@ -196,7 +196,6 @@ setnames(import_gdp,"NY.GDP.DEFL.ZS","gdp_current")
 gdp_deflated. In words, also tell us the base year that you picked and why. At the
 end, run a head() command to prove that everything works. [5 points]
 ```{r}
-
 #subset to get a data frame only for US dollars 
 usd_deflator = subset(import_gdp,country == "United States")
 
@@ -205,29 +204,29 @@ usd_deflator$iso2c = NULL
 usd_deflator$country = NULL
 
 #merge 
-deflated_data = left_join(x = inequality_long,
-                          y = usd_deflator,
-                          by = "year")
+#deflated_data = left_join(x = inequality_long,
+                         # y = usd_deflator,
+                         # by = "year")
 
 #deflation 
-inequality_long$deflated_amount = deflated_data$current_amount/
-                                (deflated_data$deflator/100)
+#inequality_long$deflated_amount = deflated_data$current_amount/
+                                #(deflated_data$deflator/100)
 ```
 
 
 10. In a Shiny app, what are the three main components and their subcomponents? [5
 points]
 ```{r}
-library(shiny)
+#library(shiny)
 #component 1: User Interface (UI) [an HTML page]
   #subcomponent: assigning input and outputs
-ui <- fluidPage("Hello, World")
+#ui <- fluidPage("Hello, World")
 #component 2: server function
   #subcomponent: rendering functions, assigning it to output variables 
-server <- function(input,output) {
-}
+#server <- function(input,output) {
+#}
 #component 3: execution, telling shiny what the ui and server is. 
-shinyApp(ui = ui,server = server)
+#shinyApp(ui = ui,server = server)
 
 ```
 
